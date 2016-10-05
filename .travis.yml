@@ -11,6 +11,6 @@ install:
   - sudo apt-get install beanstalkd
   - composer install
 before_script:
-  - beanstalkd -l 127.0.0.1 -p 11300
+  - beanstalkd -l 127.0.0.1 -p 11300 &
 script:
   - vendor/bin/phpunit
