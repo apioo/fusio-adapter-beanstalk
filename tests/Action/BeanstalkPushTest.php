@@ -27,6 +27,7 @@ use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
+use Pheanstalk\Job;
 use PSX\Record\Record;
 
 /**
@@ -55,12 +56,12 @@ class BeanstalkPushTest extends BeanstalkTestCase
         $this->assertEquals(['success' => true, 'message' => 'Push was successful'], $response->getBody());
 
         // check whether we can get the message from the queue
-        $job = $this->connection
-            ->watch('foo_queue')
-            ->ignore('default')
-            ->reserve();
+        $job = $this->connection->reserveFromTube('foo_queue');
 
+        $this->assertInstanceOf(Job::class, $job);
         $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $job->getData());
+
+        $this->connection->delete($job);
     }
 
     public function testGetForm()

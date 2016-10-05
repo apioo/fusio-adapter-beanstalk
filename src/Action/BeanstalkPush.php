@@ -67,7 +67,7 @@ class BeanstalkPush implements ActionInterface
             $writer = new Writer\Json();
             $body   = $writer->write($request->getBody());
 
-            $connection->useTube($configuration->get('queue'))->put($body);
+            $connection->putInTube($configuration->get('queue'), $body);
 
             return $this->response->build(200, [], [
                 'success' => true,
