@@ -1,0 +1,8 @@
+{
+  "actionClass": [
+    "Fusio\\Adapter\\Beanstalk\\Action\\BeanstalkPush"
+  ],
+  "connectionClass": [
+    "Fusio\\Adapter\\Beanstalk\\Connection\\Beanstalk"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "fusio/adapter-beanstalk",
+  "description": "Handles communication with a beanstalk queue",
+  "homepage": "http://fusio-project.org",
+  "keywords": ["fusio-adapter"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christoph Kappestein",
+      "email": "christoph.kappestein@gmail.com",
+      "homepage": "http://christoph.kappestein.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "pda/pheanstalk": "^3.0",
+    "fusio/engine": "^0.4@dev"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fusio\\Adapter\\Beanstalk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fusio\\Adapter\\Beanstalk\\Tests\\": "tests/"
+    }
+  }
+}
