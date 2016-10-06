@@ -1,6 +1,6 @@
 {
   "name": "fusio/adapter-beanstalk",
-  "description": "Handles communication with a beanstalk queue",
+  "description": "Handles communication with a beanstalk message queue",
   "homepage": "http://fusio-project.org",
   "keywords": ["fusio-adapter"],
   "license": "AGPL-3.0",
