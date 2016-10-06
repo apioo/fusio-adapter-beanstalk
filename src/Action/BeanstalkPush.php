@@ -50,10 +50,10 @@ class BeanstalkPush extends ActionAbstract
         $connection = $this->connector->getConnection($configuration->get('connection'));
 
         if ($connection instanceof Pheanstalk) {
-            $writer = new Writer\Json();
-            $body   = $writer->write($request->getBody());
-
-            $connection->putInTube($configuration->get('queue'), $body);
+            $connection->putInTube(
+                $configuration->get('queue'), 
+                $this->jsonProcessor->write($request->getBody())
+            );
 
             return $this->response->build(200, [], [
                 'success' => true,
