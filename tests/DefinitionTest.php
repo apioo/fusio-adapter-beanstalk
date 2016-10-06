@@ -19,39 +19,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Adapter\Beanstalk\Connection;
+namespace Fusio\Adapter\Beanstalk\Tests;
 
-use Fusio\Engine\ConnectionInterface;
-use Fusio\Engine\Form\BuilderInterface;
-use Fusio\Engine\Form\ElementFactoryInterface;
-use Fusio\Engine\ParametersInterface;
-use Pheanstalk\Pheanstalk;
+use Fusio\Engine\Test\DefinitionTestCase;
 
 /**
- * Beanstalk
+ * DefinitionTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Beanstalk implements ConnectionInterface
+class DefinitionTest extends DefinitionTestCase
 {
-    public function getName()
+    protected function getDefinition()
     {
-        return 'Beanstalk';
-    }
-
-    /**
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return \MongoDB
-     */
-    public function getConnection(ParametersInterface $config)
-    {
-        return new Pheanstalk($config->get('host'));
-    }
-
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
-    {
-        $builder->add($elementFactory->newInput('host', 'Host', 'text', 'The IP or hostname of the Beanstalk server'));
+        return __DIR__ . '/../definition.json';
     }
 }

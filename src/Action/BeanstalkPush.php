@@ -3,7 +3,7 @@
  * Fusio
  * A web-application to create dynamically RESTful APIs
  *
- * Copyright (C) 2015-2016 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (C) 2015-2016 Christoph Kappestein <christoph.kappestein@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,39 +21,25 @@
 
 namespace Fusio\Adapter\Beanstalk\Action;
 
-use Fusio\Engine\ActionInterface;
-use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\ActionAbstract;
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Response\FactoryInterface as ResponseFactoryInterface;
 use Pheanstalk\Pheanstalk;
 use PSX\Data\Writer;
 
 /**
  * BeanstalkPush
  *
- * @author  Christoph Kappestein <k42b3.x@gmail.com>
+ * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class BeanstalkPush implements ActionInterface
+class BeanstalkPush extends ActionAbstract
 {
-    /**
-     * @Inject
-     * @var \Fusio\Engine\ConnectorInterface
-     */
-    protected $connector;
-
-    /**
-     * @Inject
-     * @var \Fusio\Engine\Response\FactoryInterface
-     */
-    protected $response;
-
     public function getName()
     {
         return 'Beanstalk-Push';
@@ -82,15 +68,5 @@ class BeanstalkPush implements ActionInterface
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The Beanstalk connection which should be used'));
         $builder->add($elementFactory->newInput('queue', 'Queue', 'text', 'The name of the queue'));
-    }
-
-    public function setConnector(ConnectorInterface $connector)
-    {
-        $this->connector = $connector;
-    }
-
-    public function setResponse(ResponseFactoryInterface $response)
-    {
-        $this->response = $response;
     }
 }
