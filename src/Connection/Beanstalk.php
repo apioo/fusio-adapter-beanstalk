@@ -43,7 +43,7 @@ class Beanstalk implements ConnectionInterface
 
     /**
      * @param \Fusio\Engine\ParametersInterface $config
-     * @return \MongoDB
+     * @return \Pheanstalk\Pheanstalk
      */
     public function getConnection(ParametersInterface $config)
     {
