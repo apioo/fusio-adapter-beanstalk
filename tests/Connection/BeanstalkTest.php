@@ -42,16 +42,16 @@ class BeanstalkTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConnection()
     {
-        /** @var Beanstalk $connection */
-        $connection = $this->getConnectionFactory()->factory(Beanstalk::class);
+        /** @var Beanstalk $connectionFactory */
+        $connectionFactory = $this->getConnectionFactory()->factory(Beanstalk::class);
 
         $config = new Parameters([
             'host' => '127.0.0.1',
         ]);
 
-        $client = $connection->getConnection($config);
+        $connection = $connectionFactory->getConnection($config);
 
-        $this->assertInstanceOf(Pheanstalk::class, $client);
+        $this->assertInstanceOf(Pheanstalk::class, $connection);
     }
 
     public function testConfigure()
@@ -67,5 +67,19 @@ class BeanstalkTest extends \PHPUnit_Framework_TestCase
         $elements = $builder->getForm()->getProperty('element');
         $this->assertEquals(1, count($elements));
         $this->assertInstanceOf(Input::class, $elements[0]);
+    }
+
+    public function testPing()
+    {
+        /** @var Beanstalk $connectionFactory */
+        $connectionFactory = $this->getConnectionFactory()->factory(Beanstalk::class);
+
+        $config = new Parameters([
+            'host' => '127.0.0.1',
+        ]);
+
+        $connection = $connectionFactory->getConnection($config);
+
+        $this->assertTrue($connectionFactory->ping($connection));
     }
 }

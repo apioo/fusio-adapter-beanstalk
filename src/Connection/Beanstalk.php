@@ -21,6 +21,7 @@
 
 namespace Fusio\Adapter\Beanstalk\Connection;
 
+use Fusio\Engine\Connection\PingableInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
@@ -34,7 +35,7 @@ use Pheanstalk\Pheanstalk;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Beanstalk implements ConnectionInterface
+class Beanstalk implements ConnectionInterface, PingableInterface
 {
     public function getName()
     {
@@ -53,5 +54,15 @@ class Beanstalk implements ConnectionInterface
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
     {
         $builder->add($elementFactory->newInput('host', 'Host', 'text', 'The IP or hostname of the Beanstalk server'));
+    }
+
+    public function ping($connection)
+    {
+        if ($connection instanceof Pheanstalk) {
+            $stats = $connection->stats();
+            return isset($stats->pid) && $stats->pid > 0;
+        } else {
+            return false;
+        }
     }
 }
