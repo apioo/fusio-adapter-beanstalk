@@ -27,6 +27,7 @@ use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Pheanstalk\Pheanstalk;
+use Pheanstalk\PheanstalkInterface;
 
 /**
  * Beanstalk
@@ -48,12 +49,13 @@ class Beanstalk implements ConnectionInterface, PingableInterface
      */
     public function getConnection(ParametersInterface $config)
     {
-        return new Pheanstalk($config->get('host'));
+        return new Pheanstalk($config->get('host'), $config->get('port') ?: PheanstalkInterface::DEFAULT_PORT);
     }
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
     {
         $builder->add($elementFactory->newInput('host', 'Host', 'text', 'The IP or hostname of the Beanstalk server'));
+        $builder->add($elementFactory->newInput('port', 'Port', 'number', 'Optional the port of the Beanstalk server'));
     }
 
     public function ping($connection)
