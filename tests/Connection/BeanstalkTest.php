@@ -28,6 +28,7 @@ use Fusio\Engine\Form\Element\Input;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use Pheanstalk\Pheanstalk;
+use PHPUnit\Framework\TestCase;
 
 /**
  * BeanstalkTest
@@ -36,7 +37,7 @@ use Pheanstalk\Pheanstalk;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class BeanstalkTest extends \PHPUnit_Framework_TestCase
+class BeanstalkTest extends TestCase
 {
     use EngineTestCaseTrait;
 

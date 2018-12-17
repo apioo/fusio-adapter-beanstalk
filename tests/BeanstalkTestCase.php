@@ -26,6 +26,7 @@ use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * BeanstalkTestCase
@@ -34,7 +35,7 @@ use Fusio\Engine\Test\EngineTestCaseTrait;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-abstract class BeanstalkTestCase extends \PHPUnit_Framework_TestCase
+abstract class BeanstalkTestCase extends TestCase
 {
     use EngineTestCaseTrait;
 
