@@ -46,7 +46,7 @@ abstract class BeanstalkTestCase extends TestCase
      */
     protected $connection;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::$hasConnection) {
             $this->markTestSkipped('Beanstalkd connection not available');
