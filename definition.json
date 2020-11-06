@@ -1,4 +1,7 @@
 {
+  "actionClass": [
+    "Fusio\\Adapter\\Beanstalk\\Action\\BeanstalkPublish"
+  ],
   "connectionClass": [
     "Fusio\\Adapter\\Beanstalk\\Connection\\Beanstalk"
   ]
