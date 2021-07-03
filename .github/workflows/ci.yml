@@ -13,7 +13,7 @@ jobs:
          - 7.4
          - 8.0
     services:
-      rabbitmq:
+      beanstalkd:
         image: schickling/beanstalkd
     steps:
       - name: Checkout
