@@ -15,6 +15,8 @@ jobs:
     services:
       beanstalkd:
         image: schickling/beanstalkd
+        ports:
+          - 11300:11300
     steps:
       - name: Checkout
         uses: actions/checkout@v2
