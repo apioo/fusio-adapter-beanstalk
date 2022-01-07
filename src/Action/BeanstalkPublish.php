@@ -29,22 +29,23 @@ use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
 use Pheanstalk\Pheanstalk;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * Action which publishes a message to a queue
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
- * @link    http://fusio-project.org
+ * @link    https://www.fusio-project.org/
  */
 class BeanstalkPublish extends ActionAbstract
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Beanstalk-Publish';
     }
 
-    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
+    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context): HttpResponseInterface
     {
         $connection = $this->getConnection($configuration);
 
@@ -58,7 +59,7 @@ class BeanstalkPublish extends ActionAbstract
         ]);
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The Beanstalk connection which should be used'));
     }
