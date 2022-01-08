@@ -27,7 +27,7 @@ use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Pheanstalk\Pheanstalk;
-use Pheanstalk\PheanstalkInterface;
+use Pheanstalk\Contract\PheanstalkInterface;
 
 /**
  * Beanstalk
@@ -45,7 +45,12 @@ class Beanstalk implements ConnectionInterface, PingableInterface
 
     public function getConnection(ParametersInterface $config): Pheanstalk
     {
-        return new Pheanstalk($config->get('host'), $config->get('port') ?: PheanstalkInterface::DEFAULT_PORT);
+        $port = (int) $config->get('port');
+        if (empty($port)) {
+            $port = PheanstalkInterface::DEFAULT_PORT;
+        }
+
+        return Pheanstalk::create($config->get('host'), $port);
     }
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
