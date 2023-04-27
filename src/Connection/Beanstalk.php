@@ -63,7 +63,7 @@ class Beanstalk implements ConnectionInterface, PingableInterface
     {
         if ($connection instanceof Pheanstalk) {
             $stats = $connection->stats();
-            return isset($stats->pid) && $stats->pid > 0;
+            return isset($stats['pid']) && $stats['pid'] > 0;
         } else {
             return false;
         }
