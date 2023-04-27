@@ -22,13 +22,12 @@
 namespace Fusio\Adapter\Beanstalk\Tests\Connection;
 
 use Fusio\Adapter\Beanstalk\Connection\Beanstalk;
+use Fusio\Adapter\Beanstalk\Tests\BeanstalkTestCase;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Form\Element\Input;
 use Fusio\Engine\Parameters;
-use Fusio\Engine\Test\EngineTestCaseTrait;
 use Pheanstalk\Pheanstalk;
-use PHPUnit\Framework\TestCase;
 
 /**
  * BeanstalkTest
@@ -37,10 +36,8 @@ use PHPUnit\Framework\TestCase;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org/
  */
-class BeanstalkTest extends TestCase
+class BeanstalkTest extends BeanstalkTestCase
 {
-    use EngineTestCaseTrait;
-
     public function testGetConnection()
     {
         /** @var Beanstalk $connectionFactory */
