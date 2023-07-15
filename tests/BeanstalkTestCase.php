@@ -21,20 +21,14 @@
 
 namespace Fusio\Adapter\Beanstalk\Tests;
 
-use Fusio\Adapter\Aws\Action\AwsLambdaInvoke;
-use Fusio\Adapter\Aws\Connection\Aws;
-use Fusio\Adapter\Aws\Generator\AwsLambda;
-use Fusio\Adapter\Beanstalk\Action\BeanstalkPublish;
+use Fusio\Adapter\Beanstalk\Adapter;
 use Fusio\Adapter\Beanstalk\Connection\Beanstalk;
-use Fusio\Engine\Action\Runtime;
-use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use Pheanstalk\Pheanstalk;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * BeanstalkTestCase
@@ -48,12 +42,6 @@ abstract class BeanstalkTestCase extends TestCase
     use EngineTestCaseTrait;
 
     protected ?Pheanstalk $connection = null;
-
-    protected function configure(Runtime $runtime, Container $container): void
-    {
-        $container->set(Beanstalk::class, new Beanstalk());
-        $container->set(BeanstalkPublish::class, new BeanstalkPublish($runtime));
-    }
 
     protected function setUp(): void
     {
@@ -84,5 +72,10 @@ abstract class BeanstalkTestCase extends TestCase
         } catch (\Exception $e) {
             $this->markTestSkipped('Beanstalkd connection not available');
         }
+    }
+
+    protected function getAdapterClass(): string
+    {
+        return Adapter::class;
     }
 }
