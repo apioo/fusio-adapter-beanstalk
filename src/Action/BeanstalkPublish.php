@@ -48,9 +48,17 @@ class BeanstalkPublish extends ActionAbstract
     {
         $connection = $this->getConnection($configuration);
 
+        $tube = $configuration->get('tube');
+        if (empty($tube)) {
+            $tube = $request->get('tube');
+            $payload = $request->get('payload');
+        } else {
+            $payload = \json_encode($request->getPayload());
+        }
+
         $connection
-            ->useTube($request->get('tube'))
-            ->put($request->get('payload'));
+            ->useTube($tube)
+            ->put($payload);
 
         return $this->response->build(200, [], [
             'success' => true,
@@ -61,6 +69,7 @@ class BeanstalkPublish extends ActionAbstract
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newConnection('connection', 'Connection', 'The Beanstalk connection which should be used'));
+        $builder->add($elementFactory->newInput('tube', 'Tube', 'text', 'The tube'));
     }
 
     protected function getConnection(ParametersInterface $configuration): Pheanstalk
