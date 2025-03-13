@@ -66,8 +66,7 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
     public function ping(mixed $connection): bool
     {
         if ($connection instanceof Pheanstalk) {
-            $stats = $connection->stats();
-            return $stats->pid > 0;
+            return $connection->stats()->pid > 0;
         } else {
             return false;
         }

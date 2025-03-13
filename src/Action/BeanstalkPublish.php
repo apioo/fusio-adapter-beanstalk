@@ -28,6 +28,7 @@ use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
 use Pheanstalk\Pheanstalk;
+use Pheanstalk\Values\TubeName;
 use PSX\Http\Environment\HttpResponseInterface;
 use PSX\Json\Parser;
 
@@ -57,7 +58,7 @@ class BeanstalkPublish extends ActionAbstract
             $payload = Parser::encode($request->getPayload());
         }
 
-        $connection->useTube($tube);
+        $connection->useTube(new TubeName($tube));
         $connection->put($payload);
 
         return $this->response->build(200, [], [
