@@ -22,10 +22,10 @@ namespace Fusio\Adapter\Beanstalk\Connection;
 
 use Fusio\Engine\Connection\PingableInterface;
 use Fusio\Engine\ConnectionAbstract;
+use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
-use Pheanstalk\Contract\PheanstalkInterface;
 use Pheanstalk\Pheanstalk;
 
 /**
@@ -44,12 +44,17 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
 
     public function getConnection(ParametersInterface $config): Pheanstalk
     {
-        $port = (int) $config->get('port');
-        if (empty($port)) {
-            $port = PheanstalkInterface::DEFAULT_PORT;
+        $host = $config->get('host');
+        if (empty($host)) {
+            throw new ConfigurationException('No host configured');
         }
 
-        return Pheanstalk::create($config->get('host'), $port);
+        $port = (int) $config->get('port');
+        if ($port > 0) {
+            return Pheanstalk::create($host, $port);
+        } else {
+            return Pheanstalk::create($host);
+        }
     }
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
@@ -62,7 +67,7 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
     {
         if ($connection instanceof Pheanstalk) {
             $stats = $connection->stats();
-            return isset($stats['pid']) && $stats['pid'] > 0;
+            return $stats->pid > 0;
         } else {
             return false;
         }

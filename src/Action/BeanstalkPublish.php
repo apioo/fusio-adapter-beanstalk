@@ -29,6 +29,7 @@ use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
 use Pheanstalk\Pheanstalk;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Json\Parser;
 
 /**
  * Action which publishes a message to a queue
@@ -53,12 +54,11 @@ class BeanstalkPublish extends ActionAbstract
             $tube = $request->get('tube');
             $payload = $request->get('payload');
         } else {
-            $payload = \json_encode($request->getPayload());
+            $payload = Parser::encode($request->getPayload());
         }
 
-        $connection
-            ->useTube($tube)
-            ->put($payload);
+        $connection->useTube($tube);
+        $connection->put($payload);
 
         return $this->response->build(200, [], [
             'success' => true,
