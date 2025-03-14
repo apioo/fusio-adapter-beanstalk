@@ -58,6 +58,10 @@ class BeanstalkPublish extends ActionAbstract
             $payload = Parser::encode($request->getPayload());
         }
 
+        if (empty($tube)) {
+            throw new ConfigurationException('No tube configured');
+        }
+
         $connection->useTube(new TubeName($tube));
         $connection->put($payload);
 
