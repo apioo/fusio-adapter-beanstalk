@@ -26,7 +26,9 @@ use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
+use Pheanstalk\Exception\ClientException;
 use Pheanstalk\Pheanstalk;
+use Pheanstalk\Values\TubeList;
 
 /**
  * Beanstalk
@@ -65,9 +67,13 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
 
     public function ping(mixed $connection): bool
     {
-        if ($connection instanceof Pheanstalk) {
-            return $connection->stats()->pid > 0;
-        } else {
+        if (!$connection instanceof Pheanstalk) {
+            return false;
+        }
+
+        try {
+            return $connection->listTubes() instanceof TubeList;
+        } catch (ClientException) {
             return false;
         }
     }
