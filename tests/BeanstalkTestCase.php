@@ -24,6 +24,7 @@ use Fusio\Adapter\Beanstalk\Adapter;
 use Fusio\Adapter\Beanstalk\Connection\Beanstalk;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Parameters;
+use Fusio\Engine\Repository\ConnectionMemory;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use Pheanstalk\Pheanstalk;
@@ -54,7 +55,9 @@ abstract class BeanstalkTestCase extends TestCase
             },
         ]);
 
-        $this->getConnectionRepository()->add($connection);
+        /** @var ConnectionMemory $repository */
+        $repository = $this->getConnectionRepository();
+        $repository->add($connection);
     }
 
     protected function newConnection(): Pheanstalk

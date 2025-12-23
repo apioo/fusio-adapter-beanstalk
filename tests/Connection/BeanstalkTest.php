@@ -22,6 +22,7 @@ namespace Fusio\Adapter\Beanstalk\Tests\Connection;
 
 use Fusio\Adapter\Beanstalk\Connection\Beanstalk;
 use Fusio\Adapter\Beanstalk\Tests\BeanstalkTestCase;
+use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Form\Element\Input;
@@ -37,7 +38,7 @@ use Pheanstalk\Pheanstalk;
  */
 class BeanstalkTest extends BeanstalkTestCase
 {
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         /** @var Beanstalk $connectionFactory */
         $connectionFactory = $this->getConnectionFactory()->factory(Beanstalk::class);
@@ -51,11 +52,13 @@ class BeanstalkTest extends BeanstalkTestCase
         $this->assertInstanceOf(Pheanstalk::class, $connection);
     }
 
-    public function testConfigure()
+    public function testConfigure(): void
     {
         $connection = $this->getConnectionFactory()->factory(Beanstalk::class);
         $builder    = new Builder();
         $factory    = $this->getFormElementFactory();
+
+        $this->assertInstanceOf(ConfigurableInterface::class, $connection);
 
         $connection->configure($builder, $factory);
 
@@ -67,7 +70,7 @@ class BeanstalkTest extends BeanstalkTestCase
         $this->assertInstanceOf(Input::class, $elements[1]);
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         /** @var Beanstalk $connectionFactory */
         $connectionFactory = $this->getConnectionFactory()->factory(Beanstalk::class);
