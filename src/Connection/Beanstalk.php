@@ -26,6 +26,7 @@ use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
+use InvalidArgumentException;
 use Pheanstalk\Exception\ClientException;
 use Pheanstalk\Pheanstalk;
 use Pheanstalk\Values\TubeList;
@@ -71,6 +72,10 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
             return false;
         }
 
-        return $connection->stats()->version !== '';
+        try {
+            return $connection->stats()->version !== '';
+        } catch (InvalidArgumentException) {
+            return false;
+        }
     }
 }
