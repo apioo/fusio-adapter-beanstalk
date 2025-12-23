@@ -73,7 +73,9 @@ class Beanstalk extends ConnectionAbstract implements PingableInterface
         }
 
         try {
-            return $connection->stats()->version !== '';
+            iterator_to_array($connection->listTubes());
+
+            return true;
         } catch (InvalidArgumentException) {
             return false;
         }
